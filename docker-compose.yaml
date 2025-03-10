@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  database:
+    image: database:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydatabase
+
+  backend:
+    image: backend:latest
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: database
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: mydatabase
+    depends_on:
+      - database
+
+  frontend:
+    image: frontend:latest
+    ports:
+      - "80:80"
